@@ -2,6 +2,10 @@ import argparse
 import os
 import re
 
+import tempfile
+import shutil
+import subprocess
+
 from langchain.prompts import PromptTemplate
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain_core.output_parsers import StrOutputParser
@@ -191,39 +195,10 @@ spans:
         "env_vars": env_vars
     })
 
-    validate_env_vars_in_yaml(generated_yaml, env_vars) 
+
 
     return generated_yaml
 
-def validate_env_vars_in_yaml(generated_yaml, expected_env_vars):
-    import yaml
-    # Remove markdown code blocks if present
-    clean_yaml = generated_yaml.replace("```yaml", "").replace("```", "").strip()
-    
-    # Handle multiple YAML documents - take only the first one
-    if "---" in clean_yaml:
-        yaml_parts = clean_yaml.split("---")
-        # Find the first non-empty part that looks like YAML content
-        for part in yaml_parts:
-            part = part.strip()
-            if part and not part.startswith("name:"):
-                continue
-            if part and ("name:" in part or "instrumentation_name:" in part):
-                clean_yaml = part
-                break
-    
-    try:
-        parsed = yaml.safe_load(clean_yaml)
-        if parsed and isinstance(parsed, dict):
-            env_vars_in_yaml = {s.get("env") for s in parsed.get("settings", [])}
-            missing = [env for env in expected_env_vars if env not in env_vars_in_yaml]
-            if missing:
-                print(f"Warning: AI missed these env vars: {missing}")
-        else:
-            print("Warning: Could not parse YAML structure")
-    except Exception as e:
-        print(f"YAML parsing error: {e}")
-        print(f"First 200 chars: {clean_yaml[:200]}...")
 
 
 def save_yaml(generated_yaml, instrumentation_dir, yamls_dir):
@@ -245,11 +220,6 @@ def save_yaml(generated_yaml, instrumentation_dir, yamls_dir):
     output_path = os.path.join(yamls_dir, f"{instr_name}.yaml")
     with open(output_path, 'w') as f:
         f.write(clean_yaml)
-
-
-import tempfile
-import shutil
-import subprocess
 
 def clone_repo(repo_url, branch=None):
     temp_dir = tempfile.mkdtemp(prefix="otel-python-contrib-")
