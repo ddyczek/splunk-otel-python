@@ -30,45 +30,47 @@ def get_instrumentation_code(path):
     if not docs:
         return f"Could not find any .py files in '{path}'"
 
-    # Priority order for files - look for these patterns first
     priority_patterns = [
         "__init__.py",
-        "instrumentation.py", 
+        "instrumentation.py",
         "patch.py",
         "middleware.py",
         "version.py"
     ]
-    
-    # Sort docs by priority (high priority files first)
-    def get_priority(doc):
+
+    def get_priority(doc, patterns=priority_patterns):
         filename = os.path.basename(doc.metadata['source'])
-        for i, pattern in enumerate(priority_patterns):
+        for i, pattern in enumerate(patterns):
             if pattern in filename:
                 return i
-        return len(priority_patterns)
-    
-    docs.sort(key=get_priority)
-    
-    # Limit content to avoid token limits (roughly 25k tokens = ~100k chars)
-    max_chars = 80000  # Conservative limit
-    total_chars = 0
-    selected_docs = []
-    
-    for doc in docs:
-        doc_chars = len(doc.page_content)
-        if total_chars + doc_chars < max_chars:
-            selected_docs.append(doc)
-            total_chars += doc_chars
-        else:
-            # If this is a high-priority file, include a truncated version
-            if get_priority(doc) < 3:  # First 3 priority patterns
-                remaining_chars = max_chars - total_chars - 200  # Leave some buffer
-                if remaining_chars > 1000:  # Only if we have meaningful space left
-                    truncated_content = doc.page_content[:remaining_chars] + "\n\n... [TRUNCATED]"
-                    doc.page_content = truncated_content
-                    selected_docs.append(doc)
-            break
-    
+        return len(patterns)
+
+    def filter_and_limit_docs(docs, max_chars=80000, priority_patterns=priority_patterns, truncate_top_n=3):
+        """
+        Sorts docs by priority and selects/truncates to fit max_chars.
+        Returns a list of selected docs (possibly with truncated content).
+        """
+        docs = sorted(docs, key=lambda doc: get_priority(doc, priority_patterns))
+        total_chars = 0
+        selected_docs = []
+        for doc in docs:
+            doc_chars = len(doc.page_content)
+            if total_chars + doc_chars < max_chars:
+                selected_docs.append(doc)
+                total_chars += doc_chars
+            else:
+                # If this is a high-priority file, include a truncated version
+                if get_priority(doc, priority_patterns) < truncate_top_n:
+                    remaining_chars = max_chars - total_chars - 200  # Leave some buffer
+                    if remaining_chars > 1000:
+                        truncated_content = doc.page_content[:remaining_chars] + "\n\n... [TRUNCATED]"
+                        doc.page_content = truncated_content
+                        selected_docs.append(doc)
+                break
+        return selected_docs
+
+    selected_docs = filter_and_limit_docs(docs)
+
     # Concatenate the content of selected documents
     return "\n\n---\n\n".join(
         [f"# Source: {os.path.basename(doc.metadata['source'])}\n\n{doc.page_content}" for doc in selected_docs]
@@ -87,8 +89,14 @@ def estimate_tokens(text: str) -> int:
     return len(text) // 4
 
 
-def generate_instrumentation_metadata(instrumentation_dir):
-    """Generates a metadata.yaml file for a single instrumentation."""
+def generate_instrumentation_metadata(instrumentation_dir, token_limit=25000, max_source_chars=40000):
+    """
+    Generates a metadata.yaml file for a single instrumentation.
+    Args:
+        instrumentation_dir: Path to the instrumentation directory.
+        token_limit: Max allowed tokens for the prompt (default: 25000).
+        max_source_chars: Max allowed characters for source code in prompt (default: 40000).
+    """
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)  
 
     # The example you are happy with, to be used in the prompt
@@ -183,8 +191,7 @@ spans:
     estimated_tokens = estimate_tokens(prompt_text)
     
     
-    if estimated_tokens > 25000:  # Conservative limit for gpt-4o-mini
-        max_source_chars = 40000  # Even more conservative
+    if estimated_tokens > token_limit:
         if len(source_code) > max_source_chars:
             source_code = source_code[:max_source_chars] + "\n\n... [TRUNCATED FOR TOKEN LIMIT]"
 
