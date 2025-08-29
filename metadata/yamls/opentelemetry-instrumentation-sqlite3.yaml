@@ -19,5 +19,4 @@ spans:
       - name: db.statement
       - name: db.name
       - name: db.operation
-      - name: net.peer.name
-      - name: net.peer.port
+      - name: db.connection_string

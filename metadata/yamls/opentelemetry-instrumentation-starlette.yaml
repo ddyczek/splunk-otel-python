@@ -23,7 +23,7 @@ settings:
     default: ''
     type: string
     category: instrumentation
-  - property: otel.instrumentation.http.capture_headers.sanitize_fields
+  - property: otel.instrumentation.http.capture_headers.sanitize.fields
     env: OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SANITIZE_FIELDS
     description: A comma-separated list of HTTP header names to sanitize.
     default: ''
@@ -37,7 +37,7 @@ settings:
     category: instrumentation
   - property: otel.python.starlette.excluded.urls
     env: OTEL_PYTHON_STARLETTE_EXCLUDED_URLS
-    description: A comma-separated list of regex patterns for Starlette-specific URLs to exclude from tracking.
+    description: A comma-separated list of regex patterns for URLs to exclude from Starlette instrumentation.
     default: ''
     type: string
     category: instrumentation

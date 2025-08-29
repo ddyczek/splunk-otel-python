@@ -13,7 +13,7 @@ settings:
     category: instrumentation
   - property: otel.instrumentation.remoulade.capture_headers
     env: OTEL_PYTHON_REMoulaDE_CAPTURE_HEADERS
-    description: A comma-separated list of message headers to capture.
+    description: A comma-separated list of message header names to capture.
     default: ''
     type: string
     category: instrumentation

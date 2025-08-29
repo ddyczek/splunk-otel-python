@@ -12,7 +12,7 @@ settings:
     type: boolean
     category: instrumentation
 spans:
-  - name: 'CLI Command {command_name}'
+  - name: 'Command {command_name}'
     kind: INTERNAL
     attributes:
       - name: process.command.args

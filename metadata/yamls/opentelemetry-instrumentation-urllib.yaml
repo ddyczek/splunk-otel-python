@@ -7,13 +7,13 @@ description: This instrumentation provides automatic tracing for HTTP requests m
 settings:
   - property: otel.python.urllib.excluded_urls
     env: OTEL_PYTHON_URLLIB_EXCLUDED_URLS
-    description: A comma-delimited list of regexes representing which URLs to exclude from tracking.
+    description: A comma-delimited list of regexes representing which URLs to exclude from tracing.
     default: ''
     type: string
     category: instrumentation
   - property: otel.python.excluded_urls
     env: OTEL_PYTHON_EXCLUDED_URLS
-    description: A fallback comma-delimited list of regexes representing which URLs to exclude from tracking.
+    description: A fallback environment variable for excluding URLs from tracing.
     default: ''
     type: string
     category: instrumentation

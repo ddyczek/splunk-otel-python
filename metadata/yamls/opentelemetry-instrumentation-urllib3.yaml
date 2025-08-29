@@ -25,6 +25,7 @@ spans:
       - name: http.url
       - name: http.scheme
       - name: http.host
+      - name: http.status_code
+      - name: http.flavor
       - name: net.peer.name
       - name: net.peer.port
-      - name: http.status_code

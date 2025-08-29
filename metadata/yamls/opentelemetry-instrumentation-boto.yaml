@@ -12,12 +12,11 @@ settings:
     type: boolean
     category: instrumentation
 spans:
-  - name: '{endpoint_name}.command'
+  - name: '{endpoint}.command'
     kind: CONSUMER
     attributes:
       - name: endpoint
       - name: http_method
-      - name: aws.agent
       - name: aws.operation
       - name: aws.region
       - name: http.status_code

@@ -13,7 +13,7 @@ settings:
     category: instrumentation
   - property: otel.instrumentation.mysql.enable_commenter
     env: OTEL_PYTHON_MYSQL_ENABLE_COMMENTER
-    description: If true, enables SQLCommenter to enrich queries with contextual information.
+    description: If true, enables SQLCommenter for MySQL instrumentation.
     default: 'false'
     type: boolean
     category: instrumentation

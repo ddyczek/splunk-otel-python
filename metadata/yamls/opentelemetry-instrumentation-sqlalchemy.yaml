@@ -39,4 +39,3 @@ spans:
       - name: db.user
       - name: net.peer.name
       - name: net.peer.port
-      - name: db.connection_string

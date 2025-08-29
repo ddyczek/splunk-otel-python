@@ -19,7 +19,7 @@ settings:
     category: instrumentation
   - property: otel.instrumentation.pymysql.commenter_options
     env: OTEL_PYTHON_PYMYSQL_COMMENTER_OPTIONS
-    description: A JSON string containing options for the SQL Commenter feature.
+    description: A JSON string containing configuration options for the SQL Commenter feature.
     default: '{}'
     type: string
     category: instrumentation
@@ -38,5 +38,4 @@ spans:
       - name: db.user
       - name: db.name
       - name: db.statement
-      - name: net.peer.name
-      - name: net.peer.port
+      - name: db.operation

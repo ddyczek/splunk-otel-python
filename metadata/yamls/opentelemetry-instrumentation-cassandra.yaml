@@ -11,7 +11,7 @@ settings:
     default: 'true'
     type: boolean
     category: instrumentation
-  - property: otel.python.cassandra.include_db_statement
+  - property: otel.instrumentation.cassandra.include_db_statement
     env: OTEL_PYTHON_CASSANDRA_INCLUDE_DB_STATEMENT
     description: If true, includes the database statement in the span attributes.
     default: 'false'

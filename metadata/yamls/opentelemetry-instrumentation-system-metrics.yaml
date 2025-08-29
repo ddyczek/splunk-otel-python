@@ -11,7 +11,7 @@ settings:
     default: 'true'
     type: boolean
     category: instrumentation
-  - property: otel.python.system_metrics.configuration
+  - property: otel.python.system_metrics.config
     env: OTEL_PYTHON_SYSTEM_METRICS_CONFIG
     description: A JSON string to configure custom metrics to be collected.
     default: '{}'

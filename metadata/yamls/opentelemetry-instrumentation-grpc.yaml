@@ -12,7 +12,7 @@ settings:
     type: string
     category: instrumentation
 spans:
-  - name: 'gRPC {method}'
+  - name: 'gRPC {rpc.method}'
     kind: SERVER
     attributes:
       - name: rpc.method
@@ -20,5 +20,4 @@ spans:
       - name: rpc.system
       - name: net.peer.ip
       - name: net.peer.port
-      - name: net.peer.name
       - name: rpc.grpc.status_code

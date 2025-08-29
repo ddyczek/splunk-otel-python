@@ -7,7 +7,7 @@ description: This instrumentation provides automatic tracing for AWS service req
 settings:
   - property: otel.instrumentation.genai.capture_message_content
     env: OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT
-    description: If true, enables capturing message content for GenAI instrumentation.
+    description: If true, captures the content of messages in GenAI interactions.
     default: 'false'
     type: boolean
     category: instrumentation
@@ -15,12 +15,8 @@ spans:
   - name: 'AWS {call_context.operation}'
     kind: CLIENT
     attributes:
-      - name: rpc.system
-      - name: rpc.service
-      - name: rpc.method
-      - name: cloud.region
       - name: aws.request_id
-      - name: retry_attempts
-      - name: http.status_code
-      - name: server.address
-      - name: server.port
+      - name: aws.region
+      - name: aws.service
+      - name: aws.operation
+      - name: aws.endpoint

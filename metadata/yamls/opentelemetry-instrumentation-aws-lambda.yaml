@@ -18,7 +18,6 @@ spans:
       - name: faas.invocation_id
       - name: cloud.account.id
       - name: cloud.resource_id
-      - name: faas.trigger
       - name: http.method
       - name: http.route
       - name: http.status_code

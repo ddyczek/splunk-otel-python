@@ -24,15 +24,8 @@ settings:
     type: string
     category: instrumentation
 spans:
-  - name: 'Kafka {topic} send'
-    kind: PRODUCER
-    attributes:
-      - name: messaging.system
-      - name: messaging.destination
-      - name: messaging.kafka.partition
-      - name: messaging.url
-  - name: 'Kafka {topic} receive'
-    kind: CONSUMER
+  - name: 'Kafka {operation} {topic}'
+    kind: MESSAGING
     attributes:
       - name: messaging.system
       - name: messaging.destination

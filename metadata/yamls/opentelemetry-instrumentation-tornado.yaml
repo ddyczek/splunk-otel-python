@@ -31,7 +31,7 @@ settings:
     category: instrumentation
   - property: otel.patched.key
     env: OTEL_PATCHED_KEY
-    description: A key used to track if the handler has been patched for instrumentation.
+    description: A key used to track if the Tornado handlers have been patched for instrumentation.
     default: '_otel_patched_key'
     type: string
     category: instrumentation

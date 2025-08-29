@@ -19,7 +19,7 @@ settings:
     category: instrumentation
   - property: otel.python.requests.excluded_urls
     env: OTEL_PYTHON_REQUESTS_EXCLUDED_URLS
-    description: A comma-separated list of regex patterns for URLs to exclude from tracing, specific to requests.
+    description: A comma-separated list of regex patterns for URLs to exclude from tracing (fallback).
     default: ''
     type: string
     category: instrumentation

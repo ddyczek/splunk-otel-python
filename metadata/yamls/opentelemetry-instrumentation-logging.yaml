@@ -19,7 +19,7 @@ settings:
     category: instrumentation
   - property: otel.python.logging.level
     env: OTEL_PYTHON_LOG_LEVEL
-    description: Sets the logging level for the logger.
+    description: Sets the logging level for log statements.
     default: 'info'
     type: string
     category: instrumentation

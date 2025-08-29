@@ -5,15 +5,27 @@ package_name: opentelemetry-instrumentation-django
 stability: stable
 description: This instrumentation provides automatic tracing for web requests in Django applications.
 settings:
-  - property: otel.python.django.enabled
+  - property: otel.python.django.instrument
     env: OTEL_PYTHON_DJANGO_INSTRUMENT
     description: If true, enables the Django instrumentation.
     default: 'true'
     type: boolean
     category: instrumentation
-  - property: otel.instrumentation.http.capture_headers.sanitize_fields
-    env: OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SANITIZE_FIELDS
-    description: A comma-separated list of HTTP header names to sanitize in spans.
+  - property: otel.python.django.excluded.urls
+    env: OTEL_PYTHON_DJANGO_EXCLUDED_URLS
+    description: A comma-separated list of regex patterns for URLs to exclude from tracing.
+    default: ''
+    type: string
+    category: instrumentation
+  - property: otel.python.django.middleware.position
+    env: OTEL_PYTHON_DJANGO_MIDDLEWARE_POSITION
+    description: The position in the middleware stack to insert the OpenTelemetry middleware.
+    default: '0'
+    type: integer
+    category: instrumentation
+  - property: otel.python.django.traced.request.attrs
+    env: OTEL_PYTHON_DJANGO_TRACED_REQUEST_ATTRS
+    description: A comma-separated list of request attribute names to extract and use as span attributes.
     default: ''
     type: string
     category: instrumentation
@@ -29,27 +41,15 @@ settings:
     default: ''
     type: string
     category: instrumentation
-  - property: otel.python.django.excluded.urls
-    env: OTEL_PYTHON_DJANGO_EXCLUDED_URLS
-    description: A comma-separated list of regex patterns for URLs to exclude from tracing.
+  - property: otel.instrumentation.http.capture_headers.sanitize.fields
+    env: OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SANITIZE_FIELDS
+    description: A comma-separated list of HTTP header names to sanitize in spans.
     default: ''
     type: string
     category: instrumentation
   - property: otel.python.excluded.urls
     env: OTEL_PYTHON_EXCLUDED_URLS
     description: A comma-separated list of regex patterns for URLs to exclude from all instrumentations.
-    default: ''
-    type: string
-    category: instrumentation
-  - property: otel.python.django.middleware.position
-    env: OTEL_PYTHON_DJANGO_MIDDLEWARE_POSITION
-    description: The position in the middleware stack to insert the OpenTelemetry middleware.
-    default: '0'
-    type: integer
-    category: instrumentation
-  - property: otel.python.django.traced.request.attrs
-    env: OTEL_PYTHON_DJANGO_TRACED_REQUEST_ATTRS
-    description: A comma-separated list of request attribute names to extract as span attributes.
     default: ''
     type: string
     category: instrumentation

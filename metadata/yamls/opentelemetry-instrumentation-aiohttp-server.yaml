@@ -27,13 +27,13 @@ spans:
   - name: 'HTTP {request.method}'
     kind: SERVER
     attributes:
-      - http.method
-      - http.scheme
-      - http.host
-      - http.target
-      - http.server_name
-      - http.status_code
-      - http.flavor
-      - net.host.port
-      - net.host.name
-      - http.route
+      - name: http.method
+      - name: http.scheme
+      - name: http.host
+      - name: http.target
+      - name: http.server_name
+      - name: http.status_code
+      - name: http.flavor
+      - name: net.host.port
+      - name: net.host.name
+      - name: http.route

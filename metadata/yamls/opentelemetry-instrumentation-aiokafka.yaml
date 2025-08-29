@@ -29,10 +29,9 @@ spans:
     attributes:
       - name: messaging.system
       - name: messaging.destination.name
+      - name: messaging.destination.partition.id
       - name: messaging.kafka.message.key
       - name: messaging.kafka.message.offset
-      - name: messaging.consumer.group.name
-      - name: server.address
-      - name: messaging.client.id
       - name: messaging.operation.name
       - name: messaging.operation.type
+      - name: messaging.consumer.group.name

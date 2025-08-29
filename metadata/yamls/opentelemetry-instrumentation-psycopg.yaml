@@ -3,12 +3,12 @@ instrumentation_name: psycopg
 source_href: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-psycopg
 package_name: opentelemetry-instrumentation-psycopg
 stability: stable
-description: This instrumentation provides automatic tracing for PostgreSQL database operations using the Psycopg library.
+description: This instrumentation provides automatic tracing for PostgreSQL database interactions using the Psycopg library.
 settings:
-  - property: otel.cursor.factory
+  - property: otel.cursor.factory.key
     env: OTEL_CURSOR_FACTORY_KEY
-    description: The cursor factory to use for creating database cursors.
-    default: ''
+    description: The key used to store the original cursor factory for tracing.
+    default: '_otel_orig_cursor_factory'
     type: string
     category: instrumentation
 spans:
