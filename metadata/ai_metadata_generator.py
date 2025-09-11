@@ -79,9 +79,9 @@ def get_instrumentation_code(path):
 
 def extract_env_vars_from_code(source_code: str):
     """
-    Extracts environment variable names from the source code.
+    Extracts environment variable names (OTEL_ and SPLUNK_) from the source code.
     """
-    return sorted(set(re.findall(r"OTEL_[A-Z0-9_]+", source_code)))
+    return sorted(set(re.findall(r"(?:OTEL|SPLUNK)_[A-Z0-9_]+", source_code)))
 
 
 def estimate_tokens(text: str) -> int:
